@@ -4,13 +4,11 @@ package com.guilherme.cars.rest;
 import com.guilherme.cars.interfaces.CarsService;
 import com.guilherme.cars.model.Cars;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.rmi.ServerException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,11 +32,21 @@ public class CarsRestService {
         return Arrays.asList(cars);
     }
 
-    @PostMapping("/api/createCars")
-    public Cars postCars() {
-        String url = "http://api-test.bhut.com.br:3000/api/createCars";
+    @PostMapping(value = "/api/createCars", consumes = "application/json", produces = "application/json")
+    public Cars postCars(@RequestBody Cars cars) {
+        String url = "http://api-test.bhut.com.br:3000/api/cars";
         RestTemplate resTemplate = new RestTemplate();
-        Cars cars = resTemplate.postForObject(url, Cars.class);
+        HttpEntity<Cars> requestEntity = new HttpEntity<>(cars);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Cars> responseEntity = restTemplate.postForEntity(url, cars, Cars.class);
+        System.out.println("Status Code: " + responseEntity.getBody().toString());
+        //System.out.println("Id: " + responseEntity.getBody().getId());
+        System.out.println("Location: " + responseEntity.getHeaders().getLocation());
+        //cars = resTemplate.postForObject(url, cars, Cars.class);
+
         return cars;
+
+
+
     }
 }

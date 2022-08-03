@@ -1,19 +1,23 @@
 package com.guilherme.cars.model;
 
 public class Cars {
-        private String _id;
+
         private String title;
         private String brand;
-        private String price;
+
+    @Override
+    public String toString() {
+        return "Cars{" +
+                "title='" + title + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price='" + price + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    private String price;
         private int age;
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public String getTitle() {
         return title;
@@ -46,4 +50,5 @@ public class Cars {
     public void setAge(int age) {
         this.age = age;
     }
+
 }
